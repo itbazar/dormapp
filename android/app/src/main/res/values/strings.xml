@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">dormapp</string>
+    <string name="title_activity_main">dormapp</string>
+    <string name="package_name">io.ionic.dormapp</string>
+    <string name="custom_url_scheme">io.ionic.dormapp</string>
+</resources>

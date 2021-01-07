@@ -45,9 +45,11 @@ export const Login = () => {
                                                 localStorage.setItem('user', JSON.stringify(response.data));
                                                 localStorage.setItem('token', 'testToken');
                                                 localStorage.setItem('refresh-token', 'testRefreshToken');
-                                                history.push('/');
+                                                // alert(JSON.stringify(response.data));
+                                                history.push('/axios');
                                             } else {
                                                 alert('نام کاربری یا رمز عبور صحیح نمی باشد');
+                                                alert(JSON.stringify(response));
                                             }
                                         })
                                     setSubmitting(false);

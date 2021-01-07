@@ -1,0 +1,7 @@
+{
+    "name": "dormapp",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+  }

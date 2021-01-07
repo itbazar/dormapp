@@ -20,16 +20,17 @@ export const AxiosCrud = () => {
 
     useEffect(async () => {
         const result = await getAllAsync();
-        setTotalCount(result.length);
-        setTodos(result);
+        setTotalCount(result.data.length);
+        setTodos(result.data);
+        // debugger;
         setIsLoading(false);
-        setPage(Math.ceil(result.length / pageItemCount)); // 193 / 10 => 19.3 => ceil(19.3) => 20
-        setCurrentTodos(result.slice(0, pageItemCount));
-        debugger;
+        setPage(Math.ceil(result.data.length / pageItemCount)); // 193 / 10 => 19.3 => ceil(19.3) => 20
+        setCurrentTodos(result.data.slice(0, pageItemCount));
+      
     }, [])
 
     const changePage = (i) => {
-        debugger;
+        // debugger;
         setCurrentPage(i);
         const startItem = ((i - 1) * pageItemCount) + 1;
         setCurrentTodos(todos.slice(startItem , (pageItemCount * i) + 1))
@@ -76,31 +77,68 @@ export const AxiosCrud = () => {
                                 </ul>
                             </nav>
                         </div>
-                        <table className="table table-striped table-bordered">
+                        <div class="table-responsive">
+                        <table className="table table-striped table-bordered ">
                             <thead>
                                 <tr>
                                     <th>شماره ردیف</th>
-                                    <th>کد</th>
-                                    <th>عنوان</th>
-                                    <th>کاربر</th>
-                                    <th>انجام شده</th>
-                                    <th>Actions</th>
+                                    <th>IdNumber</th>
+                                    <th>FirstName</th>
+                                    <th>LastName</th>
+                                    <th>FLname</th>
+                                    <th>DormNumber</th>
+                                    <th>BlockNumber</th>
+                                    <th>RoomNumber</th>
+                                    <th>event</th>
+                                    <th>eventDate</th>
+                                    <th>eventTime</th>
+                                    <th>EventTitle</th>
+                                    <th>Title</th>
+                                    <th>DeviceId</th>
+                                    <th>GroupDeviceId</th>
+                                    <th>OperatorId</th>
+                                    <th>Operator</th>
+                                    <th>Mobile</th>
+                                    <th>Phone</th>
+                                    <th>Description</th>
+                                    <th>DiffDate</th>
+                                    <th>Selected</th>
+                                    <th>Radif</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {currentTodos.map((item,index) =>
-                                    <tr key={item.id} className={item.completed ? "completed-row" : ""}>
+                                    <tr key={item.Radif} className={item.completed ? "completed-row" : ""}>
                                         <td>{index + ((currentPage - 1) * pageItemCount) + 1}</td>
-                                        <td>{item.id}</td>
-                                        <td>{item.title}</td>
-                                        <td>{item.userId}</td>
-                                        <td>{item.completed ? <span>✓</span> : <span>×</span>}</td>
-                                        <td>-</td>
+                                        <td>{item.IdNumber}</td>
+                                        <td>{item.FirstName}</td>
+                                        <td>{item.LastName}</td>
+                                        {/* <td>{item.completed ? <span>✓</span> : <span>×</span>}</td> */}
+                                        <td>{item.FLname}</td>
+                                        <td>{item.DormNumber}</td>
+                                        <td>{item.BlockNumber}</td>
+                                        <td>{item.RoomNumber}</td>
+                                        <td>{item.event}</td>
+                                        <td>{item.eventDate}</td>
+                                        <td>{item.eventTime}</td>
+                                        <td>{item.EventTitle}</td>
+                                        <td>{item.Title}</td>
+                                        <td>{item.DeviceId}</td>
+                                        <td>{item.GroupDeviceId}</td>
+                                        <td>{item.OperatorId}</td>
+                                        <td>{item.Operator}</td>
+                                        <td>{item.Mobile}</td>
+                                        <td>{item.Phone}</td>
+                                        <td>{item.Description}</td>
+                                        <td>{item.DiffDate}</td>
+                                        <td>{item.Selected}</td>
+                                        <td>{item.Radif}</td>
+    
                                     </tr>)}
                             </tbody>
                             {isLoading ? <Loading /> : null}
                         </table>
-                       
+                        </div>
                     </div>
                 </div>
             </div>

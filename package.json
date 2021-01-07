@@ -1,15 +1,19 @@
 {
-  "name": "session04-app",
+  "name": "dormapp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@capacitor/android": "^2.4.5",
+    "@capacitor/core": "^2.4.5",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.5.3",
     "formik": "^2.2.3",
     "query-string": "^6.13.7",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^6.9.6",
@@ -21,13 +25,11 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set port=3000 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "scripts": {
-     "start": "react-scripts start", "build": "react-scripts --max_old_space_size=4096 build", "test": "react-scripts test", "precommit": "lint-staged" },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -45,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@capacitor/cli": "2.4.5"
   }
 }
