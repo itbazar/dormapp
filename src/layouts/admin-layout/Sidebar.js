@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import logo from '../../assets/images/logo-nikamooz.png'
+import logo from '../../assets/images/CullinanLogo.png'
 
 export const Sidebar = () => {
     return (

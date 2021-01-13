@@ -1,66 +1,66 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import './Login.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios';
+import DormTypeCombo from 'custom-components/DormTypeCombo';
+import { loginUser } from 'services/dormService';
+import { Loading } from 'custom-components/Loading';
 
 export const Login = () => {
     const history = useHistory();
+     const [dormType, setDormType] = useState("https://tgs.ui.ac.ir/api")
+    //  const [isLoading, setIsLoading] = useState(true);
+     useEffect(() => {
+        localStorage.setItem('dorm-api',  JSON.stringify(dormType));
+        console.log("DormType: " + JSON.stringify(dormType))
+     }, [dormType])
+
     return (
         <>
-            <div className="login-wrap" style={{ marginTop: '10vh' }}>
+            <div className="login-wrap" >
                 <div className="login-html">
-                    <input id="tab-1" type="radio" name="tab" className="sign-in" checked /><label for="tab-1" className="tab">ورود به پنل</label>
-                    <input id="tab-2" type="radio" name="tab" className="for-pwd" /><label for="tab-2" className="tab">فراموشی رمز عبور</label>
+                    <input id="tab-1" type="radio" name="tab" className="sign-in" checked /><label for="tab-1" className="tab">تردد خوابگاه</label>
+                    <input id="tab-2" type="radio" name="tab" className="for-pwd" /><label for="tab-2" className="tab"></label>
                     <div className="login-form">
                         <div className="sign-in-htm">
                             <Formik
-                                initialValues={{ email: '', password: '' }}
+                                initialValues={{ username: '', password: '' }}
                                 validate={values => {
                                     const errors = {};
-                                    if (!values.email) {
-                                        errors.email = 'Required';
+                                    if (!values.username) {
+                                        errors.username = 'Required';
                                     }
                                     // } else if (
-                                    //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                                    //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.username)
                                     // ) {
-                                    //     errors.email = 'Invalid email address';
+                                    //     errors.username = 'Invalid username address';
                                     // }
                                     return errors;
                                 }}
-                                onSubmit={(values, { setSubmitting }) => {
-                                    //const apiUrl = `http://apitester.ir/api/Users/authenticate?userName=${values.email}&password=${values.password}`;
-                                    const apiUrl = process.env.REACT_APP_API_URL;
-                                    const loginUrl = apiUrl + process.env.REACT_APP_API_URL_LOGIN;
-                                    const user = {
-                                        username: values.email,
-                                        password: values.password
-                                    };
-                                    axios.get(loginUrl, {
-                                        params: user
-                                    })
-                                        .then(response => {
-                                            if (response.status == 200) {
-                                                console.log("API Login Response: " + JSON.stringify(response))
-                                                localStorage.setItem('user', JSON.stringify(response.data));
-                                                localStorage.setItem('token', 'testToken');
-                                                localStorage.setItem('refresh-token', 'testRefreshToken');
-                                                // alert(JSON.stringify(response.data));
-                                                history.push('/axios');
-                                            } else {
-                                                alert('نام کاربری یا رمز عبور صحیح نمی باشد');
-                                                alert(JSON.stringify(response));
-                                            }
-                                        })
+                                onSubmit={async (values, { setSubmitting }) => {
+                                    setSubmitting(true);
+                                    const response = await loginUser(values); 
+                                    //   debugger;
+                                    if(response)
+                                    {
+                                     
+                                        console.log("API Login Response: " + JSON.stringify(response))
+                                        localStorage.setItem('user', JSON.stringify(response));
+                                        localStorage.setItem('token', 'testToken');
+                                        localStorage.setItem('refresh-token', 'testRefreshToken');
+                                        history.push('/report');
+                                    }
+                       
                                     setSubmitting(false);
                                 }}
                             >
                                 {({ isSubmitting }) => (
                                     <Form>
                                         <div className="group">
-                                            <label for="email" className="label">نام کاربری</label>
-                                            <Field type="text" name="email" className="input" />
-                                            <ErrorMessage name="email" component="div" />
+                                            <label for="username" className="label">نام کاربری</label>
+                                            <Field type="text" name="username" className="input" />
+                                            <ErrorMessage name="username" component="div" />
                                         </div>
                                         <div className="group">
                                             <label for="pass" className="label">رمز عبور</label>
@@ -68,24 +68,38 @@ export const Login = () => {
                                             <ErrorMessage name="password" component="div" />
                                         </div>
                                         <div className="group">
-                                            <button type="submit" className="button" disabled={isSubmitting}>
+                                        <DormTypeCombo changeItem={setDormType} className="input" />
+                                        </div>
+                                       <br></br>
+                                        <div className="group">
+                                            <button type="submit" className="button" disabled={isSubmitting ? 'disabled' : ''} >
                                                 ورود
                                             </button>
+                                            {isSubmitting ? <Loading /> : null}
                                         </div>
                                     </Form>
                                 )}
                             </Formik>
                             <div className="hr"></div>
+                            <div className=" text-center" style={{fontSize:"3vw"}}>
+                                تمامی حقوق مادی و معنوی  متعلق به شرکت پدیده عصر فناوری می باشد.
+                            </div>
+                            <br/>
+                            <div className=" text-center" style={{fontSize:"3vw"}} > Developed By:
+                            <a className=" stretched-link" href={`https://t.me/hrt93`}  > HRT93</a>
+                           
+                            </div>
                         </div>
                         <div className="for-pwd-htm">
                             <div className="group">
                                 <label for="user" className="label">نام کاربری یا ایمیل</label>
-                                <input id="user" type="text" className="input" />
+                                <input id="user" type="text" />
                             </div>
                             <div className="group">
                                 <input type="submit" className="button" value="بازیابی رمز" />
                             </div>
                             <div className="hr"></div>
+                     
                         </div>
                     </div>
                 </div>

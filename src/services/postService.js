@@ -1,4 +1,4 @@
-const baseApiUrl = process.env.REACT_APP_API_URL;
+const baseApiUrl = process.env.REACT_APP_API_URL_GIRLS;
 const apiUrl = `${baseApiUrl}/posts`;
 
 export const insert = (data) => {

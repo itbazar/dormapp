@@ -1,5 +1,5 @@
 import './App.css';
-import logo from './assets/images/logo-nikamooz.png';
+import logo from './assets/images/CullinanLogo.png';
 import { Switch, Route } from 'react-router-dom';
 import { AdminLayout } from './layouts/admin-layout/AdminLayout';
 import { Login } from './components/auth/Login';
@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-    <Header />
+    {/* <Header /> */}
       <Switch>
         <Route path="/login" exact component={Login} />
         <PrivateRoute path="/" component={AdminLayout} />
